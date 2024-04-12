@@ -3,6 +3,7 @@ const dbConnect = require('./config/dbConnect');
 const bodyParser = require('body-parser');
 const app = express();
 const dotenv = require('dotenv').config();
+const cookieParser = require('cookie-parser');
 
 // My Hokies
 const {notFound, errorHandler} = require('./middleware/errorHandler');
@@ -20,6 +21,9 @@ dbConnect();
 // API body request
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+// Cookie Parser
+app.use(cookieParser());
 
 // App routes
 app.use('/api/user', authRouter);

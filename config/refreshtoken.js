@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken');
 
 // Create a JWT token
-const generateToken = (id) => {
+const generateRefreshToken = (id) => {
     return jwt.sign({id}, process.env.JWT_SECRET_KEY, {expiresIn: "3d"});
 }
 
-module.exports = { generateToken } ;
+module.exports = { generateRefreshToken } ;

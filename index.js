@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const dotenv = require('dotenv').config();
 const cookieParser = require('cookie-parser');
+const morgan = require('morgan');
 
 // My Hokies
 const {notFound, errorHandler} = require('./middleware/errorHandler');
@@ -13,7 +14,8 @@ const {notFound, errorHandler} = require('./middleware/errorHandler');
 const PORT = process.env.PORT || 4000;
 
 // Routes
-const authRouter = require('./routes/authRoute');
+const authRoute = require('./routes/authRoute');
+const productRoute = require('./routes/productRoute');
 
 // mongo database connection
 dbConnect();
@@ -25,8 +27,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Cookie Parser
 app.use(cookieParser());
 
+// Morgan API
+app.use(morgan("dev"));
+
 // App routes
-app.use('/api/user', authRouter);
+app.use('/api/user', authRoute);
+app.use('/api/product', productRoute);
 
 // App Error Handler
 app.use(notFound);

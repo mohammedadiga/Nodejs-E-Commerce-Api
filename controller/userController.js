@@ -234,6 +234,30 @@ const logout = asyncHandler(async (req, res) => {
         
 });
 
+// Update User Password
+const updatePassword = asyncHandler(async (req, res) => {
+
+    const { id } = req.user;
+    const { password } = req.body;
+    validateMongodbid(id);
+
+    const user = await User.findById(id);
+
+    if( password ) {
+
+        user.password = password;
+        const updatedPassword = await user.save();
+
+        console.log(updatedPassword);
+        // req.json(updatedPassword);
+        
+    } else {
+
+        req.json(user);
+
+    }
+   
+});
 
 module.exports = 
 { 
@@ -246,5 +270,6 @@ module.exports =
     blockUser,
     unblockUser,
     handleRefreshtoken,
-    logout
+    logout,
+    updatePassword
 };

@@ -15,6 +15,7 @@ const PORT = process.env.PORT || 4000;
 
 // Routes
 const authRoute = require('./routes/authRoute');
+const userRoute = require('./routes/userRoute');
 const productRoute = require('./routes/productRoute');
 
 // mongo database connection
@@ -31,7 +32,8 @@ app.use(cookieParser());
 app.use(morgan("dev"));
 
 // App routes
-app.use('/api/user', authRoute);
+app.use('/api/auth', authRoute);
+app.use('/api/user', userRoute);
 app.use('/api/product', productRoute);
 
 // App Error Handler

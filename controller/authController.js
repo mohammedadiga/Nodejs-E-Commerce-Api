@@ -125,6 +125,7 @@ const handleRefreshtoken = asyncHandler(async (req, res) => {
 
 // Update User Password
 const updatePassword = asyncHandler(async (req, res) => {
+  
   const { id } = req.user;
   const { password } = req.body;
   validateMongodbid(id);
@@ -137,7 +138,6 @@ const updatePassword = asyncHandler(async (req, res) => {
       
       user.password = password;
       const updatedPassword = await user.save();
-      console.log(updatedPassword);
       res.json(updatedPassword);
 
     } catch (error) {
@@ -161,8 +161,6 @@ const forgotPasswordToken = asyncHandler(async (req, res) => {
     
     const token = await user.createPasswordResetToken();
     await user.save();
-
-    console.log(email);
 
     const resetURL = `Hi, Please follow this link to reset your password. This  link is valid till 10 minutes from now, <button><a href='http://localhost:8000/api/auth/reset-password/${token}'>Click</a></button>`
     const data = {

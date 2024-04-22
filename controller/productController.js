@@ -1,5 +1,6 @@
 const Product = require('../models/productModel');
 const asyncHandler = require('express-async-handler');
+const validateMongodbid = require("../utils/validateMongodbid");
 const slugify = require('slugify');
 
 // Create a new product
@@ -95,6 +96,7 @@ const getAllProduct = asyncHandler(async (req, res) => {
 const getaProduct = asyncHandler(async (req, res) => {
 
     const { id } = req.params;
+    validateMongodbid(id)
 
     try {
         
@@ -111,6 +113,7 @@ const getaProduct = asyncHandler(async (req, res) => {
 const updateProduct = asyncHandler(async (req, res) => {
 
     const { id } = req.params;
+    validateMongodbid(id)
 
     try {
 
@@ -131,6 +134,7 @@ const updateProduct = asyncHandler(async (req, res) => {
 const deleteProduct = asyncHandler(async (req, res) => {
 
     const { id } = req.params;
+    validateMongodbid(id)
 
     try {
  

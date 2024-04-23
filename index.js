@@ -18,6 +18,8 @@ const authRoute = require('./routes/authRoute');
 const userRoute = require('./routes/userRoute');
 const productRoute = require('./routes/productRoute');
 const blogRoute = require('./routes/blogRoute');
+const blogCategoryRoute = require('./routes/blogCategoryRoute');
+const productCategoryRoute = require('./routes/productCategoryRoute');
 // mongo database connection
 dbConnect();
 
@@ -36,6 +38,8 @@ app.use('/api/auth', authRoute);
 app.use('/api/user', userRoute);
 app.use('/api/product', productRoute);
 app.use('/api/blog', blogRoute);
+app.use('/api/blog-category', blogCategoryRoute);
+app.use('/api/product-category', productCategoryRoute);
 
 // App Error Handler
 app.use(notFound);

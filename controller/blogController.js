@@ -1,6 +1,7 @@
 const Blog = require('../models/blogModel');
 const asyncHandler = require('express-async-handler');
 const validateMongodbid = require("../utils/validateMongodbid");
+const cloudinaryUploadImg = require('../utils/cloudinary');
 
 // Create a new blog
 const createBlog = asyncHandler(async (req, res) => {
@@ -210,17 +211,26 @@ const dislikeBlog = asyncHandler(async (req, res) => {
 // Upload Images
 const uploadImages = asyncHandler(async (req, res) => {
 
-    const { id } = req.params;
-    validateMongodbid(id);
+    // const { id } = req.params;
+    // validateMongodbid(id);
 
-    try {
+    // try {
 
-        const uploader = (path) => cloudinaryUploaderImg(path, "images");
-        console.log(uploader);
+    //     const uploader = (path) => cloudinaryUploadImg(path, "images");
+    //     const urls = [];
+    //     const files = req.files;
+
+    //     for (const file of files){
+    //         console.log(file);
+    //     }
+
+
+
+
         
-    } catch (error) {
-        throw new Error (error);
-    }
+    // } catch (error) {
+    //     throw new Error (error);
+    // }
 
 });
 

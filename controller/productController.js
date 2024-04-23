@@ -147,10 +147,31 @@ const deleteProduct = asyncHandler(async (req, res) => {
 
 });
 
+// Add product To Wishlist
+const addToWishlist = asyncHandler(async (req, res) => {
+
+    const { _id } = req.user;
+    const { productId } = req.body;
+
+    try {
+
+        
+        
+    } catch (error) {
+        throw new Error(error);
+    }
+
+    console.log(productId);
+
+
+
+});
+
 module.exports = {
     creatProduct,
     getAllProduct,
     getaProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    addToWishlist
 }

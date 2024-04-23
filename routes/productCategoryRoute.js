@@ -5,13 +5,13 @@ const { authMiddleware, isAdmin } = require('../middleware/authMiddleware');
 const router = express.Router();
 
 
-router.post('/', creatCategory);
+router.post('/', authMiddleware, isAdmin, creatCategory);
 
 router.get('/', getAllProductCategories);
 router.get('/:id', getaProductCategory);
 
-router.put('/:id', updateProductCategories);
+router.put('/:id', authMiddleware, isAdmin, updateProductCategories);
 
-router.delete('/:id', deleteProductCategories);
+router.delete('/:id', authMiddleware, isAdmin, deleteProductCategories);
 
 module.exports = router;

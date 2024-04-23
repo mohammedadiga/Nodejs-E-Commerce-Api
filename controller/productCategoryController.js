@@ -2,6 +2,8 @@ const Category = require('../models/prouctCategoryModel');
 const asyncHandler = require('express-async-handler');
 const validateMongodbid = require("../utils/validateMongodbid");
 
+
+
 // Create a new product Category
 const creatCategory = asyncHandler(async (req, res) => {
 
@@ -15,7 +17,6 @@ const creatCategory = asyncHandler(async (req, res) => {
     }
 
 });
-
 
 // Get All product Categories
 const getAllProductCategories = asyncHandler(async (req, res) => {

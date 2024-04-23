@@ -2,6 +2,8 @@ const Category = require('../models/blogCategoryModel');
 const asyncHandler = require('express-async-handler');
 const validateMongodbid = require("../utils/validateMongodbid");
 
+
+
 // Create a new blog Category
 const creatCategory = asyncHandler(async (req, res) => {
 
@@ -15,7 +17,6 @@ const creatCategory = asyncHandler(async (req, res) => {
     }
 
 });
-
 
 // Get All blog Categories
 const getAllBlogCategories = asyncHandler(async (req, res) => {

@@ -20,6 +20,7 @@ const productRoute = require('./routes/productRoute');
 const blogRoute = require('./routes/blogRoute');
 const blogCategoryRoute = require('./routes/blogCategoryRoute');
 const productCategoryRoute = require('./routes/productCategoryRoute');
+const brand = require('./routes/brandRoute');
 // mongo database connection
 dbConnect();
 
@@ -40,6 +41,7 @@ app.use('/api/product', productRoute);
 app.use('/api/blog', blogRoute);
 app.use('/api/blog-category', blogCategoryRoute);
 app.use('/api/product-category', productCategoryRoute);
+app.use('/api/brand', brand);
 
 // App Error Handler
 app.use(notFound);

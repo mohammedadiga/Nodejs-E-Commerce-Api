@@ -82,6 +82,19 @@ const unblockUser = asyncHandler(async (req, res) => {
   }
 });
 
+// Unblock a user
+const getWashlist = asyncHandler(async (req, res) => {
+
+  const { _id } = req.user;
+  try {
+    const findUser = await User.findById(_id).populate("wishlist");
+    res.json(findUser);
+  } catch (error) {
+    throw new Error(error);
+  }
+
+});
 
 
-module.exports = { getAllUser, getaUser, updatedUser, deleteUser, blockUser,  unblockUser };
+
+module.exports = { getAllUser, getaUser, updatedUser, deleteUser, blockUser,  unblockUser, getWashlist };

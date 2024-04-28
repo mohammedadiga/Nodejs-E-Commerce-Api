@@ -1,7 +1,7 @@
 const Blog = require('../models/blogModel');
 const asyncHandler = require('express-async-handler');
 const validateMongodbid = require("../utils/validateMongodbid");
-const cloudinaryUploadImg = require('../utils/cloudinary');
+// const cloudinaryUploadImg = require('../utils/cloudinary');
 
 // Create a new blog
 const createBlog = asyncHandler(async (req, res) => {
@@ -85,124 +85,67 @@ const deleteBlog = asyncHandler(async (req, res) => {
 // Like the blog
 const likeBlog = asyncHandler(async (req, res) => {
 
+    // find the login user
+    const { _id } = req.user;
+
+
     const { blogId } = req.body;
     validateMongodbid(blogId);
 
     // Find the blog which you want to be liked
     const blog = await Blog.findById(blogId);
     
-    // find the login user
-    const loginUserId = req?.user?._id;
 
     // find if the user has liked the blog
-    const userLiked = blog?.like?.find(
-        (userId) => userId?.toString() === loginUserId?.toString()
-    );
+    const alreadyLikedIndex = blog.like.findIndex((id) => id.toString() === _id.toString());
 
     // find if the user has disliked the blog
-    const userDisliked = blog?.dislike?.find(
-        (userId) => userId?.toString() === loginUserId?.toString()
-    );
+    const alreadyDislikedIndex = blog.dislike.findIndex((id) => id.toString() === _id.toString());
 
+    if (alreadyLikedIndex === -1) {
 
-    if (!userLiked){
-
-        await Blog.findByIdAndUpdate(
-            blogId,
-            {
-                $addToSet: { like: loginUserId },
-            },
-            {news: true}
-        );
-
-        if(userDisliked){
-
-            await Blog.findByIdAndUpdate(
-                blogId,
-                {
-                    $pull: { dislike: loginUserId },
-                },
-                {news: true}
-            );
-
-        }
+        blog.like.push(_id)
+        if(alreadyDislikedIndex !== -1) blog.dislike.pull(_id) 
 
     } else {
-
-        await Blog.findByIdAndUpdate(
-            blogId,
-            {
-                $pull: { like: loginUserId },
-            },
-            {news: true}
-        );
-
+        blog.like.pull(_id)
     }
 
-
-    const newBlog = await Blog.findById(blogId);
-    res.json(newBlog);
+    await blog.save();
+    res.json(blog);
 
 });
 
 // Dislike the blog
 const dislikeBlog = asyncHandler(async (req, res) => {
 
+    // find the login user
+    const { _id } = req.user;
+
     const { blogId } = req.body;
     validateMongodbid(blogId);
 
     // Find the blog which you want to be liked
     const blog = await Blog.findById(blogId);
     
-    // find the login user
-    const loginUserId = req?.user?._id;
-
     // find if the user has liked the blog
-    const userLiked = blog?.like?.find(
-        (userId) => userId?.toString() === loginUserId?.toString()
-    );
+    const alreadyLikedIndex = blog.like.findIndex((id) => id.toString() === _id.toString());
 
     // find if the user has disliked the blog
-    const userDisliked = blog?.dislike?.find(
-        (userId) => userId?.toString() === loginUserId?.toString()
-    );
+    const alreadyDislikedIndex = blog.dislike.findIndex((id) => id.toString() === _id.toString());
 
-    if (!userDisliked){
+    if (alreadyDislikedIndex === -1) {
 
-        await Blog.findByIdAndUpdate(
-            blogId,
-            {
-                $addToSet: { dislike: loginUserId },
-            },
-            {news: true}
-        );
-
-        if(userLiked){
-
-            await Blog.findByIdAndUpdate(
-                blogId,
-                {
-                    $pull: { like: loginUserId },
-                },
-                {news: true}
-            );
-
-        }
+        blog.dislike.push(_id)
+        if(alreadyLikedIndex !== -1) blog.like.pull(_id) 
 
     } else {
-
-        await Blog.findByIdAndUpdate(
-            blogId,
-            {
-                $pull: { dislike: loginUserId },
-            },
-            {news: true}
-        );
-
+        blog.dislike.pull(_id)
     }
 
-    const newBlog = await Blog.findById(blogId);
-    res.json(newBlog);
+    await blog.save();
+    res.json(blog);
+
 
 
 
